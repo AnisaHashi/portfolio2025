@@ -56,7 +56,7 @@ const ModernHero = () => {
             <div className="w-full h-full rounded-full bg-gradient-to-tr from-primary to-accent p-1 shadow-glow">
               <div className="w-full h-full rounded-full bg-card flex items-center justify-center overflow-hidden">
                 <img
-                  src="/poftiolio2025/Images/profil.png"
+                  src="/portfolio2025/Images/profil.png"
                   alt="Profilbilde"
                   className="rounded-full object-cover"
                 />
