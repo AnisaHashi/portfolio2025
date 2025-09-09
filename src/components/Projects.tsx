@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -65,6 +65,17 @@ const Projects = () => {
   const [lightboxImages, setLightboxImages] = useState<string[]>([]);
   const [lightboxIndex, setLightboxIndex] = useState(0);
 
+  // Ref til scroll-container
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  const scrollLeft = () => {
+    scrollRef.current?.scrollBy({ left: -400, behavior: "smooth" });
+  };
+
+  const scrollRight = () => {
+    scrollRef.current?.scrollBy({ left: 400, behavior: "smooth" });
+  };
+
   const projects = [
     {
       title: "Personlig portefølje-nettside",
@@ -81,6 +92,7 @@ const Projects = () => {
         "SEO-optimalisert",
       ],
       images: ["/Images/portfolio.png"],
+      gitUrl: "https://github.com/AnisaHashi/portfolio2025.git",
     },
     {
       title: "InfoTavle - Oppgavehåndtering",
@@ -153,7 +165,7 @@ const Projects = () => {
   ];
 
   return (
-    <section id="projects" className="py-20 px-4 bg-background">
+    <section id="projects" className="py-20 px-4 bg-background relative">
       <div className="container mx-auto max-w-7xl">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-6xl font-bold text-foreground mb-6">
@@ -169,8 +181,25 @@ const Projects = () => {
           <div className="w-24 h-1 gradient-accent mx-auto rounded-full mt-8"></div>
         </div>
 
+        {/* Scroll knapper */}
+        <button
+          onClick={scrollLeft}
+          className="hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 bg-background/80 rounded-full p-3 shadow-md hover:bg-primary/20 transition"
+        >
+          <ChevronLeft className="w-6 h-6" />
+        </button>
+        <button
+          onClick={scrollRight}
+          className="hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 bg-background/80 rounded-full p-3 shadow-md hover:bg-primary/20 transition"
+        >
+          <ChevronRight className="w-6 h-6" />
+        </button>
+
         {/* Horizontal scroll container */}
-        <div className="flex overflow-x-auto space-x-6 snap-x snap-mandatory scrollbar-thin scrollbar-thumb-primary/50 scrollbar-track-transparent pb-6">
+        <div
+          ref={scrollRef}
+          className="flex overflow-x-auto space-x-6 snap-x snap-mandatory scrollbar-thin scrollbar-thumb-primary/50 scrollbar-track-transparent pb-6"
+        >
           {projects.map((project, index) => {
             const IconComponent = project.icon;
             return (
